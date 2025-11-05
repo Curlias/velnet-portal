@@ -198,16 +198,18 @@
             
             const switchUrl = urlParams.get('switch_url');
             const apIp = urlParams.get('uamip') || urlParams.get('ip');
-            const apPort = urlParams.get('uamport') || '80';
+            const useHttps = window.location.protocol === 'https:';
+            const protocol = useHttps ? 'https://' : 'http://';
+            const apPort = urlParams.get('uamport') || (useHttps ? '4343' : '80');
             
             if (switchUrl) {
                 form.action = decodeURIComponent(switchUrl);
             } else if (apIp) {
-                form.action = 'http://' + apIp + ':' + apPort + '/auth/index.html/u';
+                form.action = protocol + apIp + ':' + apPort + '/auth/index.html/u';
             } else {
                 const currentHost = window.location.hostname;
                 if (currentHost.includes('velnet.veldrion.com')) {
-                    form.action = 'http://10.0.0.60/auth/index.html/u';
+                    form.action = 'https://10.0.0.60:4343/auth/index.html/u';
                 } else {
                     form.action = '/auth/index.html/u';
                 }
