@@ -161,7 +161,7 @@
             <h2 class="title">Portal de Acceso VELNET</h2>
             <p class="subtitle">Conéctate de forma segura a Internet</p>
             
-            <form method="POST" action="https://10.0.0.60:4343/auth/index.html/u" id="loginForm">
+            <form method="POST" action="" id="loginForm">
                 <input type="hidden" name="cmd" value="authenticate">
                 <input type="hidden" name="url" value="http://www.msftconnecttest.com/redirect">
                 
@@ -192,6 +192,45 @@
         if (urlParams.get('error') === '1') {
             document.getElementById('errorMessage').style.display = 'block';
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            
+            const switchUrl = urlParams.get('switch_url');
+            const apMac = urlParams.get('ap');
+            const clientMac = urlParams.get('mac');
+            const essid = urlParams.get('essid');
+            
+            if (switchUrl) {
+                form.action = decodeURIComponent(switchUrl);
+            } else {
+                form.action = window.location.protocol + '//' + window.location.host + '/auth/index.html/u';
+            }
+            
+            if (apMac) {
+                const apInput = document.createElement('input');
+                apInput.type = 'hidden';
+                apInput.name = 'ap';
+                apInput.value = apMac;
+                form.appendChild(apInput);
+            }
+            
+            if (clientMac) {
+                const macInput = document.createElement('input');
+                macInput.type = 'hidden';
+                macInput.name = 'mac';
+                macInput.value = clientMac;
+                form.appendChild(macInput);
+            }
+            
+            if (essid) {
+                const essidInput = document.createElement('input');
+                essidInput.type = 'hidden';
+                essidInput.name = 'essid';
+                essidInput.value = essid;
+                form.appendChild(essidInput);
+            }
+        });
     </script>
 </body>
 </html>
