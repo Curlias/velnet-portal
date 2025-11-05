@@ -161,7 +161,10 @@
             <h2 class="title">Portal de Acceso VELNET</h2>
             <p class="subtitle">Conéctate de forma segura a Internet</p>
             
-            <form method="POST" action="/api/auth" id="loginForm">
+            <form method="POST" action="/auth/index.html/u" id="loginForm">
+                <input type="hidden" name="cmd" value="authenticate">
+                <input type="hidden" name="url" value="http://www.msftconnecttest.com/redirect">
+                
                 <div id="errorMessage" style="display: none; background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; text-align: center;">
                     Usuario o contraseña incorrectos
                 </div>
