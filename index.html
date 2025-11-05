@@ -198,7 +198,7 @@
             
             const switchUrl = urlParams.get('switch_url');
             const apIp = urlParams.get('uamip') || urlParams.get('ip');
-            const apPort = urlParams.get('uamport') || '8088';
+            const apPort = urlParams.get('uamport') || '80';
             
             if (switchUrl) {
                 form.action = decodeURIComponent(switchUrl);
@@ -207,7 +207,7 @@
             } else {
                 const currentHost = window.location.hostname;
                 if (currentHost.includes('velnet.veldrion.com')) {
-                    form.action = 'http://10.0.0.60:8088/auth/index.html/u';
+                    form.action = 'http://10.0.0.60/auth/index.html/u';
                 } else {
                     form.action = '/auth/index.html/u';
                 }
