@@ -198,16 +198,16 @@
             
             const switchUrl = urlParams.get('switch_url');
             const apIp = urlParams.get('uamip') || urlParams.get('ip');
-            const apPort = urlParams.get('uamport') || '4343';
+            const apPort = urlParams.get('uamport') || '8088';
             
             if (switchUrl) {
                 form.action = decodeURIComponent(switchUrl);
             } else if (apIp) {
-                form.action = 'https://' + apIp + ':' + apPort + '/auth/index.html/u';
+                form.action = 'http://' + apIp + ':' + apPort + '/auth/index.html/u';
             } else {
                 const currentHost = window.location.hostname;
                 if (currentHost.includes('velnet.veldrion.com')) {
-                    form.action = 'https://10.0.0.60:4343/auth/index.html/u';
+                    form.action = 'http://10.0.0.60:8088/auth/index.html/u';
                 } else {
                     form.action = '/auth/index.html/u';
                 }
@@ -224,6 +224,9 @@
                     form.appendChild(input);
                 }
             });
+            
+            console.log('Form action configurado:', form.action);
+            console.log('Parámetros URL detectados:', Object.fromEntries(urlParams.entries()));
         });
     </script>
 </body>
