@@ -197,39 +197,33 @@
             const form = document.getElementById('loginForm');
             
             const switchUrl = urlParams.get('switch_url');
-            const apMac = urlParams.get('ap');
-            const clientMac = urlParams.get('mac');
-            const essid = urlParams.get('essid');
+            const apIp = urlParams.get('uamip') || urlParams.get('ip');
+            const apPort = urlParams.get('uamport') || '4343';
             
             if (switchUrl) {
                 form.action = decodeURIComponent(switchUrl);
+            } else if (apIp) {
+                form.action = 'https://' + apIp + ':' + apPort + '/auth/index.html/u';
             } else {
-                form.action = window.location.protocol + '//' + window.location.host + '/auth/index.html/u';
+                const currentHost = window.location.hostname;
+                if (currentHost.includes('velnet.veldrion.com')) {
+                    form.action = 'https://10.0.0.60:4343/auth/index.html/u';
+                } else {
+                    form.action = '/auth/index.html/u';
+                }
             }
             
-            if (apMac) {
-                const apInput = document.createElement('input');
-                apInput.type = 'hidden';
-                apInput.name = 'ap';
-                apInput.value = apMac;
-                form.appendChild(apInput);
-            }
-            
-            if (clientMac) {
-                const macInput = document.createElement('input');
-                macInput.type = 'hidden';
-                macInput.name = 'mac';
-                macInput.value = clientMac;
-                form.appendChild(macInput);
-            }
-            
-            if (essid) {
-                const essidInput = document.createElement('input');
-                essidInput.type = 'hidden';
-                essidInput.name = 'essid';
-                essidInput.value = essid;
-                form.appendChild(essidInput);
-            }
+            const params = ['ap', 'mac', 'essid', 'ip', 'called', 'calling', 'nasid', 'sessionid', 'userurl', 'challenge'];
+            params.forEach(param => {
+                const value = urlParams.get(param);
+                if (value) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = param;
+                    input.value = value;
+                    form.appendChild(input);
+                }
+            });
         });
     </script>
 </body>
